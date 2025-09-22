@@ -7,7 +7,7 @@
 
 ## Package Description
 
-Under development!
+Package containing a standard format for the logging module.
 
 ## Usage
 
@@ -16,7 +16,10 @@ Under development!
 from a script:
 
 ```python
-import logsteplib
+from logsteplib import logstep
+
+process_name = "XPTO"
+logger = logstep.get_logger(name=process_name)
 ```
 
 ## Installation
