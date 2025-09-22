@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "logsteplib"
 version = "0.0.1"
 requires-python = ">=3.10"
-description = "Logging configuration"
+description = "Package containing a standard format for the logging module."
 readme = "README.md"
 authors = [{ name = "Paulo Portela", email = "portela.paulo@gmail.com" }]
 maintainers = [{name = "Paulo Portela", email = "portela.paulo@gmail.com" }]
