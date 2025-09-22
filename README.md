@@ -1,4 +1,4 @@
-# loggerlib
+# logsteplib
 
 * [Description](#package-description)
 * [Usage](#usage)
@@ -11,17 +11,17 @@ Under development!
 
 ## Usage
 
-* [loggerlib](#loggerlib)
+* [logsteplib](#logsteplib)
 
 from a script:
 
 ```python
-import loggerlib
+import logsteplib
 ```
 
 ## Installation
 
-* [loggerlib](#loggerlib)
+* [logsteplib](#logsteplib)
 
 Install python and pip if you have not already.
 
@@ -34,7 +34,7 @@ pip install pip --upgrade
 For production:
 
 ```bash
-pip install loggerlib
+pip install logsteplib
 ```
 
 This will install the package and all of it's python dependencies.
@@ -42,8 +42,8 @@ This will install the package and all of it's python dependencies.
 If you want to install the project for development:
 
 ```bash
-git clone https://github.com/aghuttun/loggerlib.git
-cd loggerlib
+git clone https://github.com/aghuttun/logsteplib.git
+cd logsteplib
 pip install -e ".[dev]"
 ```
 
@@ -51,6 +51,6 @@ To test the development package: [Testing](#testing)
 
 ## License
 
-* [loggerlib](#loggerlib)
+* [logsteplib](#logsteplib)
 
 BSD License (see license file)
