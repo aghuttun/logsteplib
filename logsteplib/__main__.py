@@ -1,5 +1,3 @@
-from . import logstep
-
 def main():
     print("Package containing a standard format for the logging module.")
 
