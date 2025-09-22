@@ -16,10 +16,10 @@ Package containing a standard format for the logging module.
 from a script:
 
 ```python
-from logsteplib import logstep
+import logsteplib
 
 process_name = "XPTO"
-logger = logstep.get_logger(name=process_name)
+logger = logsteplib.get_logger(name=process_name)
 ```
 
 ## Installation
