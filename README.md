@@ -103,4 +103,4 @@ The script's docstrings follow the numpydoc style.
 
 BSD License (see license file)
 
-- [logsteplib](#logsteplib)
+[top](#logsteplib)
