@@ -93,8 +93,6 @@ cd logsteplib
 pip install -e ".[dev]"
 ```
 
-To test the development package: [Testing](#testing)
-
 ## Docstring
 
 The script's docstrings follow the numpydoc style.
