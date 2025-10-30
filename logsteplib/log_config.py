@@ -1,5 +1,14 @@
 """
-Standard logger configuration library.
+Configure and standardize logging for console output.
+
+This module provides a configurable logger class that sets up a stream logger
+with a consistent format and suppresses noisy loggers such as 'py4j'. Use this
+to ensure readable and uniform logging output in scripts and applications.
+
+Classes
+-------
+LogConfig
+    Set up and manage a logger with a standard format and level.
 """
 
 import logging
@@ -8,20 +17,44 @@ import sys
 
 class LogConfig:
     """
-    A configurable logger for console output using Python's logging module.
+    Configure and manage a logger for console output with a standardized format.
 
-    This class sets up a stream logger with a standardised format and suppresses noisy loggers such as 'py4j'. It is
-    intended for use in scripts and applications that require consistent and readable logging output.
+    Set up a stream logger with a consistent format and suppress noisy loggers such as 'py4j'.
+    Use this class to ensure readable and uniform logging output in scripts and applications.
+
+    Parameters
+    ----------
+    name : str
+        Specify the name of the logger.
+    level : int, optional
+        Set the logging level (e.g., logging.INFO, logging.DEBUG). Default is logging.INFO.
+
+    Attributes
+    ----------
+    name : str
+        The name of the logger.
+    level : int
+        The logging level.
+    formatter : logging.Formatter
+        The formatter used for log messages.
+    logger : logging.Logger
+        The configured logger instance.
     """
 
     def __init__(self, name: str, level: int = logging.INFO):
         """
-        Initialise the logger with a given name and logging level.
+        Initialize the logger with a specified name and logging level.
 
-        Args:
-            name (str): The name of the logger.
-            level (int, optional): The logging level (e.g., logging.INFO, logging.DEBUG).
-              Defaults to logging.INFO.
+        Parameters
+        ----------
+        name : str
+            Specify the name of the logger.
+        level : int, optional
+            Set the logging level (e.g., logging.INFO, logging.DEBUG). Default is logging.INFO.
+
+        Notes
+        -----
+        Set up a custom formatter and configure the logger for console output.
         """
         self.name = name
         self.level = level
@@ -33,20 +66,25 @@ class LogConfig:
         """
         Return the standard format string for log messages.
 
-        Returns:
-            str: A format string including timestamp, logger name, level, and message.
+        Returns
+        -------
+        str
+            Format string including timestamp, logger name, level, and message.
         """
+
         return "%(asctime)s - %(name)-20s - %(levelname)-8s - %(message)s"
 
     def _setup_logger(self) -> logging.Logger:
         """
         Configure and return a logger instance with a stream handler.
 
-        Clears existing handlers, disables propagation, and applies a custom formatter.
-        Also suppresses the 'py4j' logger to reduce console noise.
+        Clear existing handlers, disable propagation, and apply a custom formatter.
+        Suppress the 'py4j' logger to reduce console noise.
 
-        Returns:
-            logging.Logger: A configured logger instance.
+        Returns
+        -------
+        logging.Logger
+            Configured logger instance.
         """
         # Logger configuration
         logger = logging.getLogger(self.name)
