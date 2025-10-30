@@ -1,9 +1,10 @@
 # logsteplib
 
-* [Description](#package-description)
-* [Usage](#usage)
-* [Installation](#installation)
-* [License](#license)
+- [Description](#package-description)
+- [Usage](#usage)
+- [Installation](#installation)
+- [Docstring](#docstring)
+- [License](#license)
 
 ## Package Description
 
@@ -11,9 +12,7 @@ Package containing a standard format for the logging module.
 
 ## Usage
 
-* [logsteplib](#logsteplib)
-
-from a script:
+From a script:
 
 ```python
 from logsteplib.log_config import LogConfig
@@ -70,8 +69,6 @@ except SchemaMismatch as e:
 
 ## Installation
 
-* [logsteplib](#logsteplib)
-
 Install python and pip if you have not already.
 
 Then run:
@@ -98,8 +95,12 @@ pip install -e ".[dev]"
 
 To test the development package: [Testing](#testing)
 
+## Docstring
+
+The script's docstrings follow the numpydoc style.
+
 ## License
 
-* [logsteplib](#logsteplib)
-
 BSD License (see license file)
+
+- [logsteplib](#logsteplib)

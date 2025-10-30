@@ -1,5 +1,36 @@
 """
-Data quality metadata structure for logging and future database persistence.
+Define data quality metadata structures for logging and future database
+persistence.
+
+This module provides a dataclass for encapsulating metadata related to data
+quality tracking, including file attributes, user information, processing
+status, and rejection reasons.
+Use this structure to support logging, auditing, and persistence of data
+quality events.
+
+Classes
+-------
+DQMetadata
+    Represent metadata for data quality tracking, including file and user
+    details.
+
+Examples
+--------
+Create a DQMetadata instance and convert it to JSON:
+
+    metadata = DQMetadata(
+        target="my_table",
+        key="123",
+        input_file_name="input.csv",
+        file_name="output.csv",
+        user_name="jdoe",
+        user_email="jdoe@example.com",
+        modify_date="2025-10-30",
+        file_size=1024,
+        file_row_count=100,
+        status="SUCCESS"
+    )
+    json_str = metadata.to_json()
 """
 
 from dataclasses import dataclass, asdict
@@ -10,11 +41,15 @@ import json
 @dataclass
 class DQMetadata:
     """
-    A data structure representing metadata for data quality tracking.
+    Serialize the metadata instance to a JSON-formatted string.
 
-    This class encapsulates information about a file and its processing status, including user details, file attributes,
-    and rejection reasons if applicable. It is designed to support logging, auditing, and future persistence to a
-    database.
+    Convert all metadata fields into a human-readable JSON string for logging,
+    transmission, or storage.
+
+    Returns
+    -------
+    str
+        JSON representation of the metadata.
     """
 
     target: str
@@ -34,11 +69,13 @@ class DQMetadata:
         """
         Convert the metadata instance to a JSON-formatted string.
 
-        This method serialises the metadata fields into a human-readable JSON string, suitable for logging,
-        transmission, or storage.
+        Serialize all metadata fields into a human-readable JSON string for
+        logging, transmission, or storage.
 
-        Returns:
-            str: A JSON representation of the metadata.
+        Returns
+        -------
+        str
+            JSON representation of the metadata.
         """
         return json.dumps(asdict(self), ensure_ascii=False, indent=2)
 
