@@ -15,15 +15,17 @@ Package containing a standard format for the logging module.
 From a script:
 
 ```python
-# Log stuff
+# Initialise a logger for the process and log an informational message
 from logsteplib.std import LogStep
 
 logger = LogStep(name="my_process").logger
+
 logger.info(msg="Something to log!")
 ```
 
 ```python
-# Create metadata
+# Create a DQMetadata instance containing metadata about a processed file
+# This metadata can be used for logging, auditing, or writing to a lakehouse table
 from logsteplib.dq import DQMetadata
 
 metadata = DQMetadata(
@@ -42,6 +44,36 @@ metadata = DQMetadata(
 )
 ```
 
+```sql
+-- Create the Delta lakehouse table for tracking SharePoint file uploads
+-- Includes metadata such as file details, user info, and processing status
+-- Table: workspace.default.sharepoint_uploader_monitoring_logs
+CREATE TABLE IF NOT EXISTS workspace.default.sharepoint_uploader_monitoring_logs (
+  target STRING,
+  key STRING,
+  input_file_name STRING,
+  file_name STRING,
+  user_name STRING,
+  user_email STRING,
+  modify_date STRING,
+  file_size STRING,  -- Should be INT
+  file_row_count STRING,  -- Should be INT
+  status STRING,
+  rejection_reason STRING,
+  file_web_url STRING
+)
+USING DELTA;
+```
+
+```python
+# Write the metadata (DQMetadata) to the lakehouse monitoring table
+from logsteplib.dq import DQWriter
+
+monitoring_table = "workspace.default.sharepoint_uploader_monitoring_logs"
+dq_writer = DQWriter(table_name=monitoring_table)
+
+dq_writer.write_metadata(metadata=metadata)
+```
 
 ## Installation
 

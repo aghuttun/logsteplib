@@ -59,8 +59,8 @@ class DQMetadata:
     user_name: str
     user_email: str
     modify_date: str  # Consider using datetime for stricter typing
-    file_size: int
-    file_row_count: int
+    file_size: str  # Consider using int for stricter typing
+    file_row_count: str  # Consider using int for stricter typing
     status: str
     rejection_reason: Optional[str] = None
     file_web_url: Optional[str] = None
