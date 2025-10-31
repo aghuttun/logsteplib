@@ -1,3 +1,3 @@
-from std.writer import LogStep
+from .writer import LogStep
 
 __all__ = ["LogStep"]

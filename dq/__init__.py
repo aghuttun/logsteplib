@@ -1,11 +1,11 @@
-from dq.exceptions import (
+from .exceptions import (
     DQFail,
     DQSchemaMismatchAndEmptyFile,
     DQSchemaMismatch,
     DQEmptyFile,
 )
-from dq.metadata import DQMetadata
-from dq.writer import DQWriter
+from .metadata import DQMetadata
+from .writer import DQWriter
 
 __all__ = [
     "DQFail",
