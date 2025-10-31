@@ -7,7 +7,7 @@ to ensure readable and uniform logging output in scripts and applications.
 
 Classes
 -------
-LogConfig
+LogStep
     Set up and manage a logger with a standard format and level.
 """
 
@@ -15,7 +15,7 @@ import logging
 import sys
 
 
-class LogConfig:
+class LogStep:
     """
     Configure and manage a logger for console output with a standardized format.
 
@@ -111,4 +111,4 @@ class LogConfig:
         return logger
 
 
-# eom
+# eof

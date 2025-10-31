@@ -31,7 +31,7 @@ class DQFail(Exception):
     """
 
 
-class SchemaMismatchAndEmptyFile(DQFail):
+class DQSchemaMismatchAndEmptyFile(DQFail):
     """
     Raise this exception for schema mismatch and empty file data quality (DQ)
     failures.
@@ -58,7 +58,7 @@ class SchemaMismatchAndEmptyFile(DQFail):
         super().__init__(message)
 
 
-class SchemaMismatch(DQFail):
+class DQSchemaMismatch(DQFail):
     """
     Raise this exception for schema mismatch data quality (DQ) failures.
 
@@ -83,7 +83,7 @@ class SchemaMismatch(DQFail):
         super().__init__(message)
 
 
-class EmptyFile(DQFail):
+class DQEmptyFile(DQFail):
     """
     Raise this exception for empty file data quality (DQ) failures.
 
@@ -107,4 +107,4 @@ class EmptyFile(DQFail):
         super().__init__(message)
 
 
-# eom
+# eof

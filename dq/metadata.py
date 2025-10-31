@@ -80,4 +80,4 @@ class DQMetadata:
         return json.dumps(asdict(self), ensure_ascii=False, indent=2)
 
 
-# eom
+# eof
