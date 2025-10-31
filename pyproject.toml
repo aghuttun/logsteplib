@@ -30,6 +30,10 @@ dependencies = ["pyspark"]
 [project.optional-dependencies]
 dev = ["twine", "build"]
 
+[tool.setuptools]
+packages = ["dq", "std"]
+package-dir = { "" = "src" }
+
 [project.urls]
 Homepage = "https://github.com/aghuttun/logsteplib"
 Documentation = "https://github.com/aghuttun/logsteplib/blob/main/README.md"
