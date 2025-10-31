@@ -26,8 +26,8 @@ Create a DQMetadata instance and convert it to JSON:
         user_name="jdoe",
         user_email="jdoe@example.com",
         modify_date="2025-10-30",
-        file_size=1024,
-        file_row_count=100,
+        file_size="1024",
+        file_row_count="100",
         status="SUCCESS"
     )
     json_str = metadata.to_json()
