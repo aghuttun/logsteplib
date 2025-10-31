@@ -14,7 +14,7 @@ Notes
 - The metadata schema includes fields such as target, key, file information, user details, and status.
 - The write_metadata method overwrites existing data in the target Delta table.
 """
-from metadata import DQMetadata
+from .metadata import DQMetadata
 from pyspark.sql import SparkSession
 from pyspark.sql.types import StructType, StructField, StringType
 from pyspark.sql import Row
