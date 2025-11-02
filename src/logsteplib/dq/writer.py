@@ -12,7 +12,7 @@ DQ
 Notes
 -----
 - The metadata schema includes fields such as target, key, file information, user details, and status.
-- The write_metadata method overwrites existing data in the target Delta table.
+- The write_metadata method append to existing data in the target Delta table.
 """
 from .metadata import DQMetadata
 from pyspark.sql import SparkSession
@@ -59,7 +59,7 @@ class DQWriter:
         Write data quality metadata to the Delta table, overwriting existing data.
 
         Convert the provided DQMetadata object to a Spark DataFrame using the defined schema,
-        and persist it to the specified Delta table. Overwrite any existing data in the table.
+        and persist it to the specified Delta table.
 
         Parameters
         ----------
@@ -73,7 +73,6 @@ class DQWriter:
         Notes
         -----
         The metadata schema includes fields such as target, key, file information, user details, and status.
-        Existing data in the Delta table will be replaced.
         """
         # Define schema
         # target: folder
