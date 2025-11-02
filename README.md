@@ -54,10 +54,10 @@ USING DELTA;
 From a Python script:
 
 ```python
-from exceptions import DQStatusCode
+from logsteplib.dq import DQStatusCode
 
-print(DQStatusCode.get_description("DQSchemaMismatch"))  # DQ FAIL: SCHEMA MISMATCH
-print(DQStatusCode.get_description("UnknownCode"))       # UNKNOWN STATUS CODE
+print(DQStatusCode.get_description("SchemaMismatch"))  # DQ FAIL: SCHEMA MISMATCH
+print(DQStatusCode.get_description("UnknownCode"))     # UNKNOWN STATUS CODE
 ```
 
 Status Code Table
@@ -87,7 +87,7 @@ metadata = DQMetadata(
     file_size="204800",
     file_row_count="15000",
     status="FAIL",
-    rejection_reason=DQStatusCode.get_description("DQSchemaMismatch"),
+    rejection_reason=DQStatusCode.get_description("SchemaMismatch"),
     file_web_url="https://lakehouse.company.com/files/clean_customers.parquet"
 )
 ```
