@@ -31,7 +31,7 @@ dependencies = ["pyspark"]
 dev = ["twine", "build"]
 
 [tool.setuptools]
-packages = ["logsteplib", "logsteplib.dq", "logsteplib.std"]
+packages = ["logsteplib", "logsteplib.dq", "logsteplib.std", "logsteplib.notification"]
 package-dir = { "" = "src" }
 
 [project.urls]
