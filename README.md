@@ -73,10 +73,16 @@ Status Code Table
 | InvalidDateFormat          | DQ FAIL: INVALID DATE FORMAT            |
 
 ```python
-# Create a DQMetadata instance containing metadata about a processed file
-# This metadata can be used for logging, auditing, or writing to a lakehouse table
+from logsteplib.dq import DQWriter
 from logsteplib.dq import DQMetadata
 
+# Init DQWriter
+monitoring_table = "workspace.default.sharepoint_uploader_monitoring_logs"
+dq_writer = DQWriter(table_name=monitoring_table)
+
+```python
+# Create a DQMetadata instance containing metadata about a processed file
+# This metadata can be used for logging, auditing, or writing to a lakehouse table
 metadata = DQMetadata(
     target="my_folder/my_system",
     key="customer_20251031",
@@ -91,15 +97,8 @@ metadata = DQMetadata(
     rejection_reason=DQStatusCode.get_description("SchemaMismatch"),
     file_web_url="https://lakehouse.company.com/files/clean_customers.parquet"
 )
-```
 
-```python
 # Write the metadata (DQMetadata) to the lakehouse monitoring table
-from logsteplib.dq import DQWriter
-
-monitoring_table = "workspace.default.sharepoint_uploader_monitoring_logs"
-dq_writer = DQWriter(table_name=monitoring_table)
-
 dq_writer.write_metadata(metadata=metadata)
 ```
 
