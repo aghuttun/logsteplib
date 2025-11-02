@@ -33,7 +33,7 @@ From a SQL script:
 ```sql
 -- Create the Delta lakehouse table for tracking SharePoint file uploads
 -- Includes metadata such as file details, user info, and processing status
--- Table: workspace.default.sharepoint_uploader_monitoring_logs
+-- Table (example): workspace.default.sharepoint_uploader_monitoring_logs
 DROP TABLE IF EXISTS workspace.default.sharepoint_uploader_monitoring_logs;
 CREATE TABLE workspace.default.sharepoint_uploader_monitoring_logs (
   target STRING,
