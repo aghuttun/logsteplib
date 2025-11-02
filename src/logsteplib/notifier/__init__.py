@@ -1,4 +1,4 @@
-from .send import EmailNotifier
+from .sender import EmailNotifier
 
 __all__ = [
     "EmailNotifier"

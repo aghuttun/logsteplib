@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "logsteplib"
-version = "0.0.16"
+version = "0.0.17"
 requires-python = ">=3.10"
 description = "Library for logging and data quality tracking (lakehouse)."
 readme = "README.md"
@@ -31,7 +31,7 @@ dependencies = ["pyspark"]
 dev = ["twine", "build"]
 
 [tool.setuptools]
-packages = ["logsteplib", "logsteplib.dq", "logsteplib.std", "logsteplib.notification"]
+packages = ["logsteplib", "logsteplib.dq", "logsteplib.streamer", "logsteplib.notifier"]
 package-dir = { "" = "src" }
 
 [project.urls]

@@ -7,7 +7,7 @@ to ensure readable and uniform logging output in scripts and applications.
 
 Classes
 -------
-LogStep
+StreamLogger
     Set up and manage a logger with a standard format and level.
 """
 
@@ -15,7 +15,7 @@ import logging
 import sys
 
 
-class LogStep:
+class StreamLogger:
     """
     Configure and manage a logger for console output with a standardized format.
 

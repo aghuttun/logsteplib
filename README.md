@@ -12,15 +12,15 @@ Package containing a standard format for the logging module.
 
 ## Usage
 
-### Generic Console Logs
+### Stream Console Logs
 
 From a script:
 
 ```python
 # Initialise a logger for the process and log an informational message
-from logsteplib.std import LogStep
+from logsteplib.streamer import StreamLogger
 
-logger = LogStep(name="my_process").logger
+logger = StreamLogger(name="my_process").logger
 
 logger.info(msg="Something to log!")
 # 2025-11-02 00:00:01 - my_process           - INFO     - Something to log!
@@ -100,6 +100,26 @@ metadata = DQMetadata(
 
 # Write the metadata (DQMetadata) to the lakehouse monitoring table
 dq_writer.write_metadata(metadata=metadata)
+```
+
+### Email Notifications
+
+```python
+# Init email notifications
+notifier = EmailNotifier(
+    smtp_server="smtp.example.com",
+    smtp_port=587,
+    username="user",
+    password="pass",
+    sender_email="sender@example.com"
+)
+
+# Send email notification
+notifier.send_email(
+    recipient_email="recipient@example.com",
+    subject="Test Email",
+    message_body="This is a test."
+)
 ```
 
 ## Installation

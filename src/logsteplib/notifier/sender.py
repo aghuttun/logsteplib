@@ -81,7 +81,7 @@ class EmailNotifier:
         self.password = password
         self.sender_email = sender_email
 
-    def send_email(self, recipient_email: str, subject: str, message_body: str):
+    def send_email(self, recipient_email: str, subject: str, message_body: str) -> None:
         """
         Send a plain text email to a recipient.
 
