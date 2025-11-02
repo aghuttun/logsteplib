@@ -23,6 +23,7 @@ from logsteplib.std import LogStep
 logger = LogStep(name="my_process").logger
 
 logger.info(msg="Something to log!")
+# 2025-11-02 00:00:01 - my_process           - INFO     - Something to log!
 ```
 
 ### Lakehouse DQ Logs
