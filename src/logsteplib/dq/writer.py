@@ -104,6 +104,7 @@ class DQWriter:
 
         # Write to Delta table
         # spark_df.write.format("delta").mode("append").saveAsTable(self.table_name)
-        spark_df.write.format("delta").mode("append").option("mergeSchema", "true").saveAsTable(self.table_name)
+        # spark_df.write.format("delta").mode("append").option("mergeSchema", "true").saveAsTable(self.table_name)
+        spark_df.write.insertInto(self.table_name, overwrite=False)
 
 # eof
