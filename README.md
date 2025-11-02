@@ -12,6 +12,8 @@ Package containing a standard format for the logging module.
 
 ## Usage
 
+### Generic Console Logs
+
 From a script:
 
 ```python
@@ -23,46 +25,71 @@ logger = LogStep(name="my_process").logger
 logger.info(msg="Something to log!")
 ```
 
-```python
-# Create a DQMetadata instance containing metadata about a processed file
-# This metadata can be used for logging, auditing, or writing to a lakehouse table
-from logsteplib.dq import DQMetadata
+### Lakehouse DQ Logs
 
-metadata = DQMetadata(
-    target="my_folder",
-    key="customer_20251031",
-    input_file_name="raw_customers.csv",
-    file_name="clean_customers.csv",
-    user_name="Parker, Peter",
-    user_email="peter.parker@example.com",
-    modify_date="2025-10-31",
-    file_size="204800",
-    file_row_count="15000",
-    status="SUCCESS",
-    rejection_reason=None,
-    file_web_url="https://lakehouse.company.com/files/clean_customers.parquet"
-)
-```
+From a SQL script:
 
 ```sql
 -- Create the Delta lakehouse table for tracking SharePoint file uploads
 -- Includes metadata such as file details, user info, and processing status
 -- Table: workspace.default.sharepoint_uploader_monitoring_logs
-CREATE TABLE IF NOT EXISTS workspace.default.sharepoint_uploader_monitoring_logs (
+DROP TABLE IF EXISTS workspace.default.sharepoint_uploader_monitoring_logs;
+CREATE TABLE workspace.default.sharepoint_uploader_monitoring_logs (
   target STRING,
   key STRING,
   input_file_name STRING,
   file_name STRING,
   user_name STRING,
   user_email STRING,
-  modify_date STRING,
-  file_size STRING,  -- Should be INT
+  modify_date STRING,     -- Should be timestamp
+  file_size STRING,       -- Should be INT
   file_row_count STRING,  -- Should be INT
   status STRING,
   rejection_reason STRING,
   file_web_url STRING
 )
 USING DELTA;
+```
+
+From a Python script:
+
+```python
+from exceptions import DQStatusCode
+
+print(DQStatusCode.get_description("DQSchemaMismatch"))  # DQ FAIL: SCHEMA MISMATCH
+print(DQStatusCode.get_description("UnknownCode"))       # UNKNOWN STATUS CODE
+```
+
+Status Code Table
+
+| Code                       | Description                             |
+| -------------------------- | --------------------------------------- |
+| NA                         | NOT APPLICABLE                          |
+| EmptyFile                  | DQ FAIL: EMPTY FILE                     |
+| SchemaMismatch             | DQ FAIL: SCHEMA MISMATCH                |
+| SchemaMismatchAndEmptyFile | DQ FAIL: SCHEMA MISMATCH AND EMPTY FILE |
+| InvalidNumericFormat       | DQ FAIL: INVALID NUMERIC FORMAT         |
+| InvalidDateFormat          | DQ FAIL: INVALID DATE FORMAT            |
+
+```python
+# Create a DQMetadata instance containing metadata about a processed file
+# This metadata can be used for logging, auditing, or writing to a lakehouse table
+from logsteplib.dq import DQMetadata
+
+metadata = DQMetadata(
+    target="my_folder/my_system",
+    key="customer_20251031",
+    input_file_name="raw_customers.csv",
+    file_name="clean_customers.csv",
+    user_name="Parker, Peter",
+    user_email="peter.parker@example.com",
+    modify_date="2025-11-02",
+    file_size="204800",
+    file_row_count="15000",
+    status="FAIL",
+    rejection_reason=DQStatusCode.get_description("DQSchemaMismatch"),
+    file_web_url="https://lakehouse.company.com/files/clean_customers.parquet"
+)
 ```
 
 ```python

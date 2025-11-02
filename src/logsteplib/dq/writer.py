@@ -78,6 +78,8 @@ class DQWriter:
         # Define schema
         # target: folder
         # key: filename + email
+        # status: SUCCESS / FAIL
+        # rejection_reason (DQStatusCode): NOT APPLICABLE, DQ FAIL: SCHEMA MISMATCH, ...
         schema = StructType(
             [
                 StructField("target", StringType(), False),
