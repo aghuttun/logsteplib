@@ -1,124 +1,96 @@
 """
-Send email notifications using SMTP.
-
-This module provides the EmailNotifier class for sending plain text email messages
-via an SMTP server. Use this class to automate email alerts or notifications
-from Python code.
-
-Classes
--------
-EmailNotifier
-    Send plain text emails using SMTP authentication.
-
-Examples
---------
->>> notifier = EmailNotifier(
-...     smtp_server="smtp.example.com",
-...     smtp_port=587,
-...     username="user",
-...     password="pass",
-...     sender_email="sender@example.com"
-... )
->>> notifier.send_email(
-...     recipient_email="recipient@example.com",
-...     subject="Test Email",
-...     message_body="This is a test."
-... )
+Send email.
 """
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
+
+import base64
+import os
+import requests
 
 
-class EmailNotifier:
-    """
-    Send plain text email notifications via SMTP.
+class EmailSender:
+    def __init__(self, client_id: str, client_secret: str, tenant_id: str, sender_email: str) -> None:
+        self._client_id = client_id
+        self._client_secret = client_secret
+        self._tenant_id = tenant_id
+        self._sender_email = sender_email
+        self._token = self._authenticate()
 
-    Establish a connection to an SMTP server and send email messages with authentication.
-    Use this class to automate email alerts or notifications from Python code.
+    def _authenticate(self) -> str:
 
-    Parameters
-    ----------
-    smtp_server : str
-        Address of the SMTP server.
-    smtp_port : int
-        Port number for the SMTP server.
-    username : str
-        Username for SMTP authentication.
-    password : str
-        Password for SMTP authentication.
-    sender_email : str
-        Email address of the sender.
+        # Authenticate and get access token
+        url = f"https://login.microsoftonline.com/{self._tenant_id}/oauth2/v2.0/token"
 
-    Methods
-    -------
-    send_email(recipient_email, subject, message_body)
-        Send a plain text email to the specified recipient.
-    """
-    def __init__(self, smtp_server: str, smtp_port: int, username: str, password: str, sender_email: str) -> None:
+        # Headers for the token request
+        headers = {"Content-Type": "application/x-www-form-urlencoded"}
+
+        # Data for the token request
+        data = {
+            "grant_type": "client_credentials",
+            "client_id": self._client_id,
+            "client_secret": self._client_secret,
+            "scope": "https://graph.microsoft.com/.default",
+        }
+
+        # Make the token request
+        response = requests.post(url=url, headers=headers, data=data)
+        # response.raise_for_status()
+
+        # Extract the access token from the response
+        self._token = response.json()["access_token"]
+
+        return self._token
+
+    def renew_token(self) -> None:
         """
-        Initialize the EmailNotifier with SMTP server details and credentials.
+        This method forces a re-authentication to obtain a new access token.
 
-        Set up the SMTP server address, port, authentication credentials, and sender email
-        for sending notifications.
-
-        Parameters
-        ----------
-        smtp_server : str
-            Specify the address of the SMTP server.
-        smtp_port : int
-            Specify the port number for the SMTP server.
-        username : str
-            Provide the username for SMTP authentication.
-        password : str
-            Provide the password for SMTP authentication.
-        sender_email : str
-            Specify the email address of the sender.
+        The new token is stored in the _token attribute and returned.
         """
-        self.smtp_server = smtp_server
-        self.smtp_port = smtp_port
-        self.username = username
-        self.password = password
-        self.sender_email = sender_email
+        self._token = self._authenticate()
 
-    def send_email(self, recipient_email: str, subject: str, message_body: str) -> None:
-        """
-        Send a plain text email to a recipient.
+    def send_email(self, recipients: list, subject: str, message: str, attachments: None | list = None) -> int:
+        # Endpoint
+        url = f"https://graph.microsoft.com/v1.0/users/{self._sender_email}/sendMail"
 
-        Compose and transmit an email message using SMTP authentication.
-        Attach the message body as plain text and set the subject and recipient fields.
+        # Headers
+        headers = {
+            "Authorization": f"Bearer {self._token}",
+            "Content-Type": "application/json",
+        }
 
-        Parameters
-        ----------
-        recipient_email : str
-            Specify the email address of the recipient.
-        subject : str
-            Specify the subject line of the email.
-        message_body : str
-            Provide the plain text content of the email message.
+        # Email message payload
+        payload = {
+            "message": {
+                "subject": subject,
+                "body": {"contentType": "HTML", "content": message},
+                "toRecipients": [{"emailAddress": {"address": r}} for r in recipients],
+            },
+            "saveToSentItems": "true",
+        }
 
-        Raises
-        ------
-        Exception
-            Raise an exception if the email fails to send due to SMTP errors or connection issues.
-        """
-        try:
-            # Create the email message
-            msg = MIMEMultipart()
-            msg["From"] = self.sender_email
-            msg["To"] = recipient_email
-            msg["Subject"] = subject
+        # Handle attachments if provided
+        if attachments:
+            payload["message"]["attachments"] = []
 
-            msg.attach(MIMEText(message_body, "plain"))
+            for file_path in attachments:
+                # Read and encode the file content
+                with open(file_path, "rb") as f:
+                    content_bytes = base64.b64encode(f.read()).decode("utf-8")
 
-            # Connect to the SMTP server and send the email
-            with smtplib.SMTP(host=self.smtp_server, port=self.smtp_port) as server:
-                server.starttls()
-                server.login(user=self.username, password=self.password)
-                server.send_message(msg=msg)
+                # Append attachment to the message
+                payload["message"]["attachments"].append(
+                    {
+                        "@odata.type": "#microsoft.graph.fileAttachment",
+                        "name": os.path.basename(file_path),
+                        "contentBytes": content_bytes,
+                    }
+                )
 
-            print(f"Email sent to {recipient_email}")
-        except Exception as e:
-            print(f"Failed to send email: {e}")
+        # Send the email (202 Accepted)
+        response = requests.post(url, headers=headers, json=message)
+        # response.raise_for_status()
+
+        return response.status_code
+
 
 # eof
