@@ -226,7 +226,7 @@ class EmailNotifier:
 
             for file_path in attachments:
                 # Read and encode the file content
-                with open(file_path, "rb") as f:
+                with open(file=file_path, mode="rb") as f:
                     content_bytes = base64.b64encode(s=f.read()).decode(encoding="utf-8")
 
                 # Append attachment to the message
@@ -238,8 +238,8 @@ class EmailNotifier:
                     }
                 )
 
-        # Send the email (202 Accepted)
-        response = requests.post(url, headers=headers, json=message)
+        # Send request (email sent: 202 Accepted)
+        response = requests.post(url=url, headers=headers, json=payload, verify=True)
         # response.raise_for_status()
 
         return response.status_code

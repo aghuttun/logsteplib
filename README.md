@@ -112,21 +112,21 @@ notifier = EmailNotifier(
     client_id=client_id,
     client_secret=client_secret,
     tenant_id=tenant_id,
-    client_email="sender@example.com"
+    sender_email="sender@example.com"
 )
 
 # Send email notification
-response = notifier.send_email(recipients=["peter.parker@example.com"],
-                               subject="Notification X",
-                               message="This is<br>a test...",
-                               attachments=None)
-if response.status_code in (200, 202):
+status_code = notifier.send_email(recipients=["peter.parker@example.com"],
+                                  subject="Notification X",
+                                  message="This is<br>a test...",
+                                  attachments=None)
+if status_code in (200, 202):
     print("Email sent")
 ```
 
 ```python
 # Using pre-defined templates
-from email_templates import EmailTemplates
+from logsteplib.notifier import EmailTemplates
 
 # Parameters
 recipient_name = "Peter Parker"
