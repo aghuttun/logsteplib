@@ -120,7 +120,7 @@ response = notifier.send_email(recipients=["peter.parker@example.com"],
                                subject="Notification X",
                                message="This is<br>a test...",
                                attachments=None)
-if response.status_code == 200:
+if response.status_code in (200, 202):
     print("Email sent")
 ```
 
