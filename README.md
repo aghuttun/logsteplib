@@ -124,6 +124,21 @@ if response.status_code == 200:
     print("Email sent")
 ```
 
+```python
+# Using pre-defined templates
+from email_templates import EmailTemplates
+
+# Parameters
+recipient_name = "Peter Parker"
+error_message = "The web is crashing."
+
+# Generate an email using the technical template
+message = EmailTemplates.technical_error(recipient_name, error_message)
+
+# Print result
+print(message)  # Dear Peter Parker...
+```
+
 ## Installation
 
 Install python and pip if you have not already.

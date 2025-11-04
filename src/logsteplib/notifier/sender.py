@@ -7,7 +7,7 @@ optional file attachments.
 
 Classes
 -------
-EmailSender
+EmailNotifier
     A class to handle email sending operations via Microsoft Graph API.
 
 Notes
@@ -24,9 +24,9 @@ import os
 import requests
 
 
-class EmailSender:
+class EmailNotifier:
     """
-    Email sender using Microsoft Graph API.
+    Send email using Microsoft Graph API.
 
     A class for sending emails through Microsoft Graph API with OAuth2 authentication.
     Supports HTML content and file attachments.
