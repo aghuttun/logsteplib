@@ -1,9 +1,8 @@
 """
 Send emails using Microsoft Graph API.
 
-This module provides functionality to send emails using Microsoft Graph API
-with OAuth2 authentication. It supports sending HTML-formatted emails with
-optional file attachments.
+This module provides functionality to send emails using Microsoft Graph API with OAuth2 authentication. It supports
+sending HTML-formatted emails with optional file attachments.
 
 Classes
 -------
@@ -12,8 +11,7 @@ EmailNotifier
 
 Notes
 -----
-The module requires proper Microsoft Azure AD application registration with
-the following configurations:
+The module requires proper Microsoft Azure AD application registration with the following configurations:
 - Registered application with client credentials
 - Required API permissions for Microsoft Graph
 - Mail.Send permissions granted to the application
@@ -64,8 +62,8 @@ class EmailNotifier:
 
     Notes
     -----
-    The class automatically handles OAuth2 authentication on initialization
-    and provides methods to send emails and manage authentication tokens.
+    The class automatically handles OAuth2 authentication on initialization and provides methods to send emails and
+    manage authentication tokens.
     """
 
     def __init__(self, client_id: str, client_secret: str, tenant_id: str, sender_email: str) -> None:
@@ -89,9 +87,8 @@ class EmailNotifier:
 
         Notes
         -----
-        The initialization process includes authentication through Microsoft Graph API
-        using the provided credentials. The obtained authentication token is stored
-        internally for subsequent API calls.
+        The initialization process includes authentication through Microsoft Graph API using the provided credentials.
+        The obtained authentication token is stored internally for subsequent API calls.
         """
 
         self._client_id = client_id
@@ -109,14 +106,13 @@ class EmailNotifier:
         Returns
         -------
         str
-            The access token obtained from Azure AD that can be used to authenticate 
-            requests to Microsoft Graph API.
+            The access token obtained from Azure AD that can be used to authenticate requests to Microsoft Graph API.
 
         Notes
         -----
         The method uses the following instance attributes that should be set during initialization:
             - self._tenant_id: The Azure AD tenant ID
-            - self._client_id: The application (client) ID 
+            - self._client_id: The application (client) ID
             - self._client_secret: The client secret for authentication
         The obtained token is stored in self._token for future use.
 
@@ -153,8 +149,7 @@ class EmailNotifier:
         """
         Force re-authentication to obtain a new access token.
 
-        This method triggers a fresh authentication process and updates the internal
-        token state.
+        This method triggers a fresh authentication process and updates the internal token state.
 
         Returns
         -------
@@ -193,11 +188,11 @@ class EmailNotifier:
 
         Notes
         -----
-        The function uses Microsoft Graph API to send emails. The email is sent from
-        the address specified in self._sender_email using the authentication token 
-        stored in self._token. Attachments are encoded in base64 format.
-        The function saves the sent email to the Sent Items folder and supports HTML
-        content in the message body.
+        - The function uses Microsoft Graph API to send emails.
+        - The email is sent from the address specified in
+        - self._sender_email using the authentication token stored in self._token.
+        - Attachments are encoded in base64 format.
+        - The function saves the sent email to the Sent Items folder and supports HTML content in the message body.
 
         Raises
         ------
@@ -232,7 +227,7 @@ class EmailNotifier:
             for file_path in attachments:
                 # Read and encode the file content
                 with open(file_path, "rb") as f:
-                    content_bytes = base64.b64encode(f.read()).decode("utf-8")
+                    content_bytes = base64.b64encode(s=f.read()).decode(encoding="utf-8")
 
                 # Append attachment to the message
                 payload["message"]["attachments"].append(
