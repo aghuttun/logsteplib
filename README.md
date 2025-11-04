@@ -105,21 +105,23 @@ dq_writer.write_metadata(metadata=metadata)
 ### Email Notifications
 
 ```python
+from logsteplib.notifier import EmailNotifier
+
 # Init email notifications
 notifier = EmailNotifier(
-    smtp_server="smtp.example.com",
-    smtp_port=587,
-    username="user",
-    password="pass",
-    sender_email="sender@example.com"
+    client_id=client_id,
+    client_secret=client_secret,
+    tenant_id=tenant_id,
+    client_email="sender@example.com"
 )
 
 # Send email notification
-notifier.send_email(
-    recipient_email="recipient@example.com",
-    subject="Test Email",
-    message_body="This is a test."
-)
+response = notifier.send_email(recipients=["peter.parker@example.com"],
+                               subject="Notification X",
+                               message="This is<br>a test...",
+                               attachments=None)
+if response.status_code == 200:
+    print("Email sent")
 ```
 
 ## Installation
