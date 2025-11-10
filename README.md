@@ -116,10 +116,12 @@ notifier = EmailNotifier(
 )
 
 # Send email notification
-status_code = notifier.send_email(recipients=["peter.parker@example.com"],
-                                  subject="Notification X",
-                                  message="This is<br>a test...",
-                                  attachments=None)
+status_code = notifier.send_email(
+    recipients=["peter.parker@example.com"],
+    subject="Notification X",
+    message="This is<br>a test...",
+    attachments=None
+)
 if status_code in (200, 202):
     print("Email sent")
 ```
@@ -133,7 +135,10 @@ recipient_name = "Peter Parker"
 error_message = "The web is crashing."
 
 # Generate an email using the technical template
-message = EmailTemplates.technical_error(recipient_name, error_message)
+message = EmailTemplates.technical_error(
+    recipient_name,
+    error_message
+)
 
 # Print result
 print(message)  # Dear Peter Parker...
